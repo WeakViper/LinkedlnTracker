@@ -1,6 +1,5 @@
 import googleLogo from '../assets/googleLogo.webp';
 import "./login.css"
-import bannerImg from "../assets/BackgroundMain.jpeg"
 import backgroundImg from "../assets/BackgroundMain.jpeg"
 import { useState } from 'react';
 
