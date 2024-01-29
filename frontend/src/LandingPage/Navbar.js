@@ -1,6 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import "./Navbar.css";
+import { Link } from 'react-router-dom';
+import { House } from 'react-bootstrap-icons';
 
 const Navbar = () => {
     const navigate = useNavigate();
@@ -22,10 +24,9 @@ const Navbar = () => {
           <div class="container-fluid">
               <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
               </div>
-      
+
               <div class="mx-auto order-0 d-flex align-items-center">
-                
-                <h1 className="ms-0 h2 text-white fw-bold">Linkedln Messenger</h1>
+                <h1 className="ms-0 hw text-white fw-bold">Linkedln Messenger</h1>
               </div>
       
               <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">

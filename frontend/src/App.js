@@ -4,6 +4,7 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SignIn from './SignInSignUp/SignIn';
 import SignUp from './SignInSignUp/SignUp';
+import Home from './Home/Home';
 
 function App() {
   return (
@@ -20,6 +21,10 @@ function App() {
 
         <Routes>
           <Route path="/signup" element={<SignUp />} />
+        </Routes>
+
+        <Routes>
+          <Route path="/home" element={<Home />} />
         </Routes>
 
       </div>
