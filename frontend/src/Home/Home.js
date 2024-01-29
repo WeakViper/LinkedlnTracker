@@ -1,22 +1,21 @@
 import HomeNavbar from "./HomeNavbar";
 import Contacts from "./Contacts";
 import BackgroundImage from "../assets/BackgroundMain.jpeg"
+import AddContactButton from "./addContactButton";
 
 const Home = () => {
     return (
-        <div style={{
-            backgroundImage: `url(${BackgroundImage})`,
-            backgroundSize: 'cover',
-            backgroundRepeat: 'no-repeat',
-            backgroundAttachment: 'fixed',
-            margin: 0,
-            padding: 0,
-            height: '100vh',
-          }}>
         <div className="HomePage">
             <HomeNavbar sticky="top" exact />
+            <div className="d-flex justify-content-start">
+                <h1 className="h2 m-5" style={{color: "black", fontWeight: "bold"}}>
+                    My Contacts
+                </h1>
+            </div>
+            <div className="line-separator mb-5" style={{borderTop: "2px solid black", width: "90%", marginLeft: "5%", marginRight: "5%"}}></div>
             <Contacts />
-        </div>
+            <div className="line-separator mb-5" style={{borderTop: "2px solid black", width: "90%", marginLeft: "5%", marginRight: "5%"}}></div>
+            <AddContactButton />
         </div>
     );
 }
