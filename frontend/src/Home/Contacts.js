@@ -38,7 +38,7 @@ const Contacts = () => {
             <div className="row justify-content-center">
                 {contacts.map((contact, index) => (
                     <div className="col-lg-3 col-md-6 mx-4 my-4" key={index}>
-                        <div className="card text-center border-dark bg-light py-4" style={{width: "18rem"}}>
+                        <div className="card text-center border-dark bg-light py-4" style={{width: "18rem", borderRadius: "20px"}}>
                             <div className="card-body">
                                 <h4 className="card-title p-3">{contact.name}</h4>
                                 <div><a href={contact.url} className="btn btn-primary mb-2 rounded-pill px-4">Chat</a></div>
