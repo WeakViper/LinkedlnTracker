@@ -1,4 +1,11 @@
+import ChatOptionsPopup from "./ChatOptionsPopup";
+import { useState } from 'react';
+
+
 const Contacts = () => {
+    const [modalShow, setModalShow] = useState(false);
+    const [url, setUrl] = useState("");
+
     //logic for fetching contacts array from /contacts off the api
     let contacts = [
         {
@@ -41,7 +48,7 @@ const Contacts = () => {
                         <div className="card text-center border-dark bg-light py-4" style={{width: "18rem", borderRadius: "20px"}}>
                             <div className="card-body">
                                 <h4 className="card-title p-3">{contact.name}</h4>
-                                <div><a href={contact.url} className="btn btn-primary mb-2 rounded-pill px-4">Chat</a></div>
+                                <div><button onClick={() => {setModalShow(true); setUrl(contact.url);}} className="btn btn-primary mb-2 rounded-pill px-4">Chat</button></div>
                                 <div><a href={contact.url} className="btn btn-primary mb-2 rounded-pill">Go to profile</a></div>
                                 <div><a href={contact.url} className="btn btn-primary rounded-pill">Delete Contact</a></div>
                             </div>
@@ -49,6 +56,11 @@ const Contacts = () => {
                     </div>
                 ))}
             </div>
+            <ChatOptionsPopup
+                show={modalShow}
+                onHide={() => setModalShow(false)}
+                link={url}
+            />
         </div>
     );
 }

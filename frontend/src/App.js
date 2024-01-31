@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import SignIn from './SignInSignUp/SignIn';
 import SignUp from './SignInSignUp/SignUp';
 import Home from './Home/Home';
+import AddContact from './Home/addContact';
 
 function App() {
   return (
@@ -25,6 +26,10 @@ function App() {
 
         <Routes>
           <Route path="/home" element={<Home />} />
+        </Routes>
+
+        <Routes>
+          <Route path="/addContact" element={<AddContact />} />
         </Routes>
 
       </div>

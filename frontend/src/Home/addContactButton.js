@@ -7,7 +7,7 @@ const AddContactButton = () => {
     const navigate = useNavigate();
 
     const handleClick = () => {
-        navigate('/signup');
+        navigate('/addContact');
     };
 
     return (

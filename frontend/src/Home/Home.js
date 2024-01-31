@@ -1,6 +1,5 @@
 import HomeNavbar from "./HomeNavbar";
 import Contacts from "./Contacts";
-import BackgroundImage from "../assets/BackgroundMain.jpeg"
 import AddContactButton from "./addContactButton";
 
 const Home = () => {
