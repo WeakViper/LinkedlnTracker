@@ -6,12 +6,12 @@ import SignIn from './SignInSignUp/SignIn';
 import SignUp from './SignInSignUp/SignUp';
 import Home from './Home/Home';
 import AddContact from './Home/addContact';
+import NewChat from './ChatInterface/NewChat';
 
 function App() {
   return (
     <Router>
       <div className="App">
-
         <Routes>
           <Route path="/" element={<LandingPage />} />
         </Routes>
@@ -32,6 +32,9 @@ function App() {
           <Route path="/addContact" element={<AddContact />} />
         </Routes>
 
+        <Routes>
+          <Route path="/newchat" element={<NewChat />} />
+        </Routes>
       </div>
     </Router>
   );

@@ -1,11 +1,12 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import { useNavigate } from 'react-router-dom';
 
 function ChatOptionsPopup(props) {
   const { link } = props;
-
+  const navigate = useNavigate();
   const handleGenerateMessageClick = () => {
-    // Your code for handling the "Generate Introduction Message" button click goes here
+    navigate('/newchat', { state: { link } });
   };
 
   const handleContinueChatClick = () => {
