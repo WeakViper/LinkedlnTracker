@@ -10,6 +10,7 @@ import NewChat from "./ChatInterface/NewChat";
 import { auth } from "./firebase-config";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./Redirect/ProtectedRoute";
+import AuthRedirect from "./Redirect/AuthRedirect";
 
 function App() {
   return (
@@ -21,29 +22,43 @@ function App() {
             <Route
               path="/signin"
               element={
-                <ProtectedRoute redirectTo="/home">
+                <AuthRedirect>
                   <SignIn />
-                </ProtectedRoute>
+                </AuthRedirect>
               }
             />
             <Route
               path="/signup"
               element={
-                <ProtectedRoute redirectTo="/home">
+                <AuthRedirect>
                   <SignUp />
-                </ProtectedRoute>
+                </AuthRedirect>
               }
             />
             <Route
               path="/home"
               element={
-                <ProtectedRoute redirectTo="/signin">
+                <ProtectedRoute>
                   <Home />
                 </ProtectedRoute>
               }
             />
-            <Route path="/addContact" element={<AddContact />} />
-            <Route path="/newchat" element={<NewChat />} />
+            <Route
+              path="/addContact"
+              element={
+                <ProtectedRoute>
+                  <AddContact />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/newchat"
+              element={
+                <ProtectedRoute>
+                  <NewChat />
+                </ProtectedRoute>
+              }
+            />
           </Routes>
         </div>
       </AuthProvider>
