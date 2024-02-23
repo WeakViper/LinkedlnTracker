@@ -1,68 +1,55 @@
-import googleLogo from '../assets/googleLogo.webp';
-import "./login.css"
-import backgroundImg from "../assets/BackgroundMain.jpeg"
-import { useState } from 'react';
+import googleLogo from "../assets/googleLogo.webp";
+import "./login.css";
+import backgroundImg from "../assets/BackgroundMain.jpeg";
+import { useEffect, useState } from "react";
+import { auth, googleProvider } from "../firebase-config";
+import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 function SignUp() {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordsMatch, setPasswordsMatch] = useState(true);
   const [userCreated, setUserCreated] = useState(false);
   const [invalidInput, setInvalidInput] = useState(false);
   const [existingUser, setExistingUser] = useState(false);
   const [unknownError, setUnknownError] = useState(false);
 
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const signUp = async (e) => {
     e.preventDefault();
 
-    if (password !== confirmPassword) {
-      setPasswordsMatch(false);
-      return;
-    }
-
-    const newUser = {email: email, firstName: firstName, lastName: lastName, 
-      password: password,  phone: phone, addresses: [], orderHistory: [], verified: false};
-
-    
-      try {
-        fetch('http://localhost:3100/signup', {
-          method: 'POST',
-          headers: { 'Content-type': 'application/json' },
-          body: JSON.stringify(newUser)
-        })
-        .then(response => {
-          if (!response.ok) {
-            return response.json();
-          }
-          return response.json();
-
-        })
-        .then(data => {
-          const message = data.message;
-          if (message === "Invalid input") {
-            setInvalidInput(true);
-          } else if (message === "User with this email already exists") {
-            setExistingUser(true);
-          } else if (message === 'Internal Server Error') {
-            setUnknownError(true);
-          } else if (message === "User created successfully") {
-            setUserCreated(true);
-          }
-        })
-        .catch(error => {
-          console.error('Fetch error:', error); // Log any fetch-related errors
-          setUnknownError(true);
-        });
-      } catch (e) {
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      navigate("/home");
+    } catch (error) {
+      console.error(error);
+      if (error.code === "auth/email-already-in-use") {
+        setExistingUser(true);
+        setUnknownError(false);
+      } else {
         setUnknownError(true);
+        setExistingUser(false);
       }
+    }
+  };
 
-  }
+  const signInWithGoogle = async (e) => {
+    e.preventDefault();
+
+    try {
+      await signInWithPopup(auth, googleProvider);
+      navigate("/home");
+    } catch (error) {
+      console.error(error);
+      setUnknownError(true);
+    }
+  };
 
   return (
     <html>
@@ -70,21 +57,20 @@ function SignUp() {
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link
-          href="bootstrap/css/bootstrap.min.css"
-          rel="stylesheet"
-        />
+        <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
         <link rel="stylesheet" href="style.css" />
         <title>Sign Up</title>
       </head>
-      <body style={{
-        backgroundImage: `url(${backgroundImg})`, // Set background image
-        backgroundSize: 'cover', // Stretch to cover the whole screen
-        backgroundRepeat: 'no-repeat', // Prevent image repetition
-        backgroundAttachment: 'fixed', // Keep the image fixed while scrolling
-        margin: 0, // Remove default margin
-        padding: 0, // Remove default padding
-      }}>
+      <body
+        style={{
+          backgroundImage: `url(${backgroundImg})`, // Set background image
+          backgroundSize: "cover", // Stretch to cover the whole screen
+          backgroundRepeat: "no-repeat", // Prevent image repetition
+          backgroundAttachment: "fixed", // Keep the image fixed while scrolling
+          margin: 0, // Remove default margin
+          padding: 0, // Remove default padding
+        }}
+      >
         <div className="container d-flex justify-content-center align-items-center min-vh-100">
           <div className="row border rounded-5 p-3 bg-white shadow box-area justify-content-center">
             <div className="col-md-6 right-box">
@@ -93,8 +79,8 @@ function SignUp() {
                   <h2>Hello There!</h2>
                   <p>We are excited to have you join us!.</p>
                 </div>
-                <form onSubmit={handleSubmit}>
-                <div className="input-group mb-3">
+                <form>
+                  <div className="input-group mb-3">
                     <input
                       type="text"
                       className="form-control form-control-lg bg-light fs-6"
@@ -150,8 +136,17 @@ function SignUp() {
                   </div>
                   <div className="input-group mb-5 d-flex justify-content-between">
                     <div className="form-check">
-                      <input type="checkbox" className="form-check-input" id="formCheck" />
-                      <label htmlFor="formCheck" className="form-check-label text-secondary"><small>Remember Me</small></label>
+                      <input
+                        type="checkbox"
+                        className="form-check-input"
+                        id="formCheck"
+                      />
+                      <label
+                        htmlFor="formCheck"
+                        className="form-check-label text-secondary"
+                      >
+                        <small>Remember Me</small>
+                      </label>
                     </div>
                   </div>
                   {!passwordsMatch && (
@@ -180,15 +175,33 @@ function SignUp() {
                     </div>
                   )}
                   <div className="input-group mb-3 loginButton">
-                    <button className="btn btn-lg btn-primary w-100 fs-6">Sign Up</button>
+                    <button
+                      className="btn btn-lg btn-primary w-100 fs-6"
+                      onClick={signUp}
+                    >
+                      Sign Up
+                    </button>
                   </div>
-                  </form>
-                  <div className="input-group mb-3">
-                    <button className="btn btn-lg btn-light w-100 fs-6"><img src={googleLogo} style={{ width: '20px' }} className="me-2" alt="Google Logo" /><small>Sign In with Google</small></button>
-                  </div>
-                  <div className="row">
-                    <small>Already have an account? <a href="/signin">Sign In</a></small>
-                  </div>
+                </form>
+                <div className="input-group mb-3">
+                  <button
+                    className="btn btn-lg btn-light w-100 fs-6"
+                    onClick={signInWithGoogle}
+                  >
+                    <img
+                      src={googleLogo}
+                      style={{ width: "20px" }}
+                      className="me-2"
+                      alt="Google Logo"
+                    />
+                    <small>Sign In with Google</small>
+                  </button>
+                </div>
+                <div className="row">
+                  <small>
+                    Already have an account? <a href="/signin">Sign In</a>
+                  </small>
+                </div>
               </div>
             </div>
           </div>
