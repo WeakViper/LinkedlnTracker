@@ -3,7 +3,7 @@ import HomeNavbar from '../Home/HomeNavbar';
 import { useEffect, useState } from 'react';
 import copy from 'copy-to-clipboard';
 
-const NewChat = () => {
+const ContinueChat = () => {
   
     const params = useParams();
     const { link } = params;
@@ -53,4 +53,4 @@ const NewChat = () => {
     );
 }
  
-export default NewChat;
+export default ContinueChat;

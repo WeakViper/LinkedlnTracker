@@ -22,7 +22,7 @@ function ChatOptionsPopup(props) {
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          Modal heading
+          Chat Options
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
