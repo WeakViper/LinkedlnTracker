@@ -6,9 +6,9 @@ import './MainPage.css';
 import userImg from "../assets/user-image.jpg"
 
 const Profile = () => {
-    const [isEditingUsername, setIsEditingUsername] = useState(false);
+    const [isEditingLink, setIsEditingUsername] = useState(false);
     const [isEditingEmail, setIsEditingEmail] = useState(false);
-    const [username, setUsername] = useState("www.something.com");
+    const [link, setLink] = useState("www.something.com");
     const [email, setEmail] = useState("user@example.com");
 
     const usernameInputRef = useRef(null);
@@ -16,16 +16,16 @@ const Profile = () => {
 
     useEffect(() => {
         // Focus the input field when editing starts
-        if (isEditingUsername) {
+        if (isEditingLink) {
             usernameInputRef.current.focus();
         }
         if (isEditingEmail) {
             emailInputRef.current.focus();
         }
-    }, [isEditingUsername, isEditingEmail]);
+    }, [isEditingLink, isEditingEmail]);
 
     const handleEditUsernameToggle = () => {
-        setIsEditingUsername(!isEditingUsername);
+        setIsEditingUsername(!isEditingLink);
     };
 
     const handleEditEmailToggle = () => {
@@ -33,7 +33,7 @@ const Profile = () => {
     };
 
     const handleUsernameChange = (event) => {
-        setUsername(event.target.value);
+        setLink(event.target.value);
     };
 
     const handleEmailChange = (event) => {
@@ -62,14 +62,14 @@ const Profile = () => {
                                 <Card.Body>
                                     <Card.Title>Link</Card.Title>
                                     <div className="editable-field">
-                                        {isEditingUsername ? (
+                                        {isEditingLink ? (
                                             <>
                                                 <input
                                                     type="text"
                                                     ref={usernameInputRef}
-                                                    value={username}
+                                                    value={link}
                                                     onChange={handleUsernameChange}
-                                                    style={{ width: username.length ? username.length * 10 : 'auto' }}
+                                                    style={{ width: link.length ? link.length * 10 : 'auto' }}
                                                 />
                                                 
                                                 <button
@@ -81,7 +81,7 @@ const Profile = () => {
                                             </>
                                         ) : (
                                             <>
-                                                {username}&nbsp;
+                                                {link}&nbsp;
                                                 <button className="edit-btn" onClick={handleEditUsernameToggle}>
                                                     <PencilSquare size={20} className="edit-icon" />
                                                 </button>
