@@ -13,6 +13,7 @@ import { auth } from "./firebase-config";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./Redirect/ProtectedRoute";
 import AuthRedirect from "./Redirect/AuthRedirect";
+import Profile from "./ProfilePage/Profile";
 
 function App() {
   return (
@@ -74,6 +75,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <ContinueChat />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute>
+                  <Profile />
                 </ProtectedRoute>
               }
             />
