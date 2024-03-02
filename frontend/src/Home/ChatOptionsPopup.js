@@ -10,7 +10,7 @@ function ChatOptionsPopup(props) {
   };
 
   const handleContinueChatClick = () => {
-    // Your code for handling the "Continue Existing Chat" button click goes here
+    navigate('/enterchats', { state: { link } });
   };
 
   return (

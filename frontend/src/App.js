@@ -7,6 +7,8 @@ import SignUp from "./SignInSignUp/SignUp";
 import Home from "./Home/Home";
 import AddContact from "./Home/addContact";
 import NewChat from "./ChatInterface/NewChat";
+import EnterExistingChat from "./ChatInterface/EnterExistingChat";
+import ContinueChat from "./ChatInterface/ContinueChat";
 import { auth } from "./firebase-config";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./Redirect/ProtectedRoute";
@@ -56,6 +58,22 @@ function App() {
               element={
                 <ProtectedRoute>
                   <NewChat />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/enterchats"
+              element={
+                <ProtectedRoute>
+                  <EnterExistingChat />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/continuechat"
+              element={
+                <ProtectedRoute>
+                  <ContinueChat />
                 </ProtectedRoute>
               }
             />

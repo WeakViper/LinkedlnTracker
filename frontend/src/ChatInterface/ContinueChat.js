@@ -1,15 +1,15 @@
-import { useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import HomeNavbar from '../Home/HomeNavbar';
 import { useEffect, useState } from 'react';
 import copy from 'copy-to-clipboard';
 
 const ContinueChat = () => {
   
-    const params = useParams();
-    const { link } = params;
+    const location = useLocation();
+    const { link, chat, suggestions } = location.state;
     const [copied, setCopiedId] = useState("");
     const [copiedText, setCopiedText] = useState("");
-    let response = "Hello I am Adeeb" //get the response from the API actually.
+    let response = link + chat + suggestions //get the response from the API actually.
 
     useEffect(() => {
         (async function run() {

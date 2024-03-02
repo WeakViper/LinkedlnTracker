@@ -1,0 +1,13 @@
+.textarea {
+    width: 100%;
+    border-radius: 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    transition: border .2s;
+}
+
+.textarea:focus {
+    border-color: blue !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
