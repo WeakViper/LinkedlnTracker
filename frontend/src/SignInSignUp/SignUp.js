@@ -5,14 +5,15 @@ import { useEffect, useState } from "react";
 import { auth, googleProvider } from "../firebase-config";
 import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function SignUp() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [url, setUrl] = useState("");
   const [passwordsMatch, setPasswordsMatch] = useState(true);
   const [userCreated, setUserCreated] = useState(false);
   const [invalidInput, setInvalidInput] = useState(false);
@@ -23,10 +24,14 @@ function SignUp() {
 
   const signUp = async (e) => {
     e.preventDefault();
-
+  
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      navigate("/home");
+      const { user } = await createUserWithEmailAndPassword(auth, email, password);
+      const uid = user.uid;
+      const url = window.location.href;
+      axios.post("http://localhost:4000/user/create", { name: firstName + " " + lastName, email: email, uid: auth?.currentUser?.uid, url: url }).then((res) => {
+        navigate("/home");
+      });
     } catch (error) {
       console.error(error);
       if (error.code === "auth/email-already-in-use") {
@@ -38,7 +43,7 @@ function SignUp() {
       }
     }
   };
-
+  
   const signInWithGoogle = async (e) => {
     e.preventDefault();
 
@@ -109,11 +114,11 @@ function SignUp() {
                   </div>
                   <div className="input-group mb-3">
                     <input
-                      type="number"
+                      type="text"
                       className="form-control form-control-lg bg-light fs-6"
-                      placeholder="Phone Number"
-                      value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
+                      placeholder="LinkedIn URL"
+                      value={url}
+                      onChange={(e) => setUrl(e.target.value)}
                     />
                   </div>
                   <div className="input-group mb-3">

@@ -15,7 +15,7 @@ function SignIn() {
   const [invalid, setInvalid] = useState(false);
 
   const navigate = useNavigate();
-
+   //auth?.currentUser?.uid
   const signIn = async (e) => {
     e.preventDefault();
 
