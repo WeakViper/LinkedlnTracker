@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Spinner } from 'react-bootstrap';
 import {auth} from '../firebase-config';
 import ChatOptionsPopup from "./ChatOptionsPopup";
 
@@ -7,16 +8,27 @@ const Contacts = () => {
     const [modalShow, setModalShow] = useState(false);
     const [url, setUrl] = useState("");
     const [contacts, setContacts] = useState([]);
+    const [loading, setLoading] = useState(true); // Add this line
 
     useEffect(() => {
         const fetchContacts = async () => {
             let response = await axios.post("http://localhost:3500/user", { uid: auth?.currentUser?.uid });
             setContacts(response.data.contacts || []);
+            setLoading(false); // Set loading to false when the response is received
             console.log(auth?.currentUser?.uid);
         };
 
         fetchContacts();
     }, []);
+
+    if (loading) {
+        return (
+            <div className="d-flex justify-content-center">
+                <Spinner animation="border" role="status" className='p-4 m-5'>
+                </Spinner>
+            </div>
+        ); // Display a Bootstrap spinner while loading
+    }
 
     return (
         <div className="container m-4">

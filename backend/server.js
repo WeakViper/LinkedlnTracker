@@ -26,6 +26,6 @@ app.use('/user', userRouter);
 app.use('/prompt', gptRouter);
 
 
-app.listen(4000, function() {
-    console.log('Listening on http://localhost:3000');
+app.listen(3500, function() {
+    console.log('Listening on http://localhost:4000');
 });

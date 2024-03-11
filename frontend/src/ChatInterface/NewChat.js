@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import copy from 'copy-to-clipboard';
 import axios from 'axios';
 import { auth } from '../firebase-config';
+import { Spinner } from 'react-bootstrap';
 
 const NewChat = () => {
   
@@ -21,10 +22,15 @@ const NewChat = () => {
         });
 
         // Rest of your useEffect code
-    }, [copied]);
+    }, []); //copied, link can be added here to make the useEffect run when they change but idts we need to for now TEST THIS.
 
     if (loading) {
-        return <div>Loading...</div>; // Or your custom loading component
+        return (
+            <div className="d-flex justify-content-center">
+                <Spinner animation="border" role="status" className='p-4 m-5'>
+                </Spinner>
+            </div>
+        ); // Display a Bootstrap spinner while loading
     }
 
     return (

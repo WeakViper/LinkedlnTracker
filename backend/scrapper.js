@@ -97,7 +97,7 @@ function getEducation(data) {
 async function scrapeProfile(url) {
     try {
       const parsedProfile = await getProfile(url);
-      const profileData = parsedProfile.data.data;
+      const profileData = parsedProfile.data;
       const name = profileData.fullName;
       const experiences = getExperiences(profileData);
       const about = profileData.about;
