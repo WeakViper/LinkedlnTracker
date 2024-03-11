@@ -1,46 +1,24 @@
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import {auth} from '../firebase-config';
 import ChatOptionsPopup from "./ChatOptionsPopup";
-import { useState } from 'react';
-
 
 const Contacts = () => {
     const [modalShow, setModalShow] = useState(false);
     const [url, setUrl] = useState("");
+    const [contacts, setContacts] = useState([]);
 
-    //logic for fetching contacts array from /contacts off the api
-    let contacts = [
-        {
-          name: "Contact 1",
-          url: "https://contact1.example.com",
-          profileInfo: "Profile info for Contact 1"
-        },
-        {
-          name: "Contact 2",
-          url: "https://contact2.example.com",
-          profileInfo: "Profile info for Contact 2"
-        },
-        {
-          name: "Contact 3",
-          url: "https://contact3.example.com",
-          profileInfo: "Profile info for Contact 3"
-        },
-        {
-          name: "Contact 4",
-          url: "https://contact4.example.com",
-          profileInfo: "Profile info for Contact 4"
-        },
-        {
-          name: "Contact 5",
-          url: "https://contact5.example.com",
-          profileInfo: "Profile info for Contact 5"
-        },
-        {
-          name: "Contact 6",
-          url: "https://contact6.example.com",
-          profileInfo: "Profile info for Contact 6"
-        }
-      ];
-      
-      return (
+    useEffect(() => {
+        const fetchContacts = async () => {
+            let response = await axios.post("http://localhost:3500/user", { uid: auth?.currentUser?.uid });
+            setContacts(response.data.contacts || []);
+            console.log(auth?.currentUser?.uid);
+        };
+
+        fetchContacts();
+    }, []);
+
+    return (
         <div className="container m-4">
             <div className="row justify-content-center">
                 {contacts.map((contact, index) => (
@@ -64,7 +42,7 @@ const Contacts = () => {
         </div>
     );
 }
- 
+
 export default Contacts;
 
 

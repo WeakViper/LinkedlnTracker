@@ -27,10 +27,9 @@ function SignUp() {
   
     try {
       const { user } = await createUserWithEmailAndPassword(auth, email, password);
-      const uid = user.uid;
-      const url = window.location.href;
-      axios.post("http://localhost:4000/user/create", { name: firstName + " " + lastName, email: email, uid: auth?.currentUser?.uid, url: url }).then((res) => {
-        navigate("/home");
+      axios.post("http://localhost:3500/user/create", { name: firstName + " " + lastName, email: email, uid: auth?.currentUser?.uid, url: url }).then((res) => {
+        console.log("Success!");
+        //navigate("/home");
       });
     } catch (error) {
       console.error(error);

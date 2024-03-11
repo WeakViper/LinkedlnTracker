@@ -1,20 +1,22 @@
-import googleLogo from '../assets/googleLogo.webp';
 import BackgroundImage from "../assets/BackgroundMain.jpeg"
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { auth } from "../firebase-config";
 
 function AddContact() {
-  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
   const [link, setLink] = useState('');
 
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const user = {email: email, password: link};
-    console.log(JSON.stringify(user));
-
-    navigate("/home")
+    axios.post("http://localhost:3500/user/contact", {uid: auth?.currentUser?.uid ,name: name, url: link}).then((res) => {
+      navigate("/home")
+    }).catch((err) => {
+      console.log(err);
+    });
   }
 
   return (
@@ -51,8 +53,8 @@ function AddContact() {
                       type="text"
                       className="form-control form-control-lg bg-light fs-6"
                       placeholder="Name"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
                     />
                 </div>
                 <div className="input-group mb-5">

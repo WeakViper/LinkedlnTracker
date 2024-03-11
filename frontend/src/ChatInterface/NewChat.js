@@ -2,6 +2,8 @@ import { useLocation } from 'react-router-dom';
 import HomeNavbar from '../Home/HomeNavbar';
 import { useEffect, useState } from 'react';
 import copy from 'copy-to-clipboard';
+import axios from 'axios';
+import { auth } from '../firebase-config';
 
 const NewChat = () => {
   
@@ -9,21 +11,21 @@ const NewChat = () => {
     const { link } = location.state;
     const [copied, setCopiedId] = useState("");
     const [copiedText, setCopiedText] = useState("");
-    let response = "Hello!" //get the response from the API actually.
+    const [response, setResponse] = useState("");
+    const [loading, setLoading] = useState(true); // Add this line
 
     useEffect(() => {
-        (async function run() {
-          if ( copied?.includes('text') ) {
-            // Reading text with readText
-            const text = await navigator.clipboard.readText();
-            setCopiedText(text);
-          }
-        })();
-        setTimeout(() => {
-          setCopiedId(undefined);
-          setCopiedText(undefined);
-        }, 3000)
-      }, [copied]);
+        axios.get("http://localhost:3500/prompt/intro", {uid: auth?.currentUser?.uid, url: link}).then((res) => {
+            setResponse(res);
+            setLoading(false); // Set loading to false when the response is received
+        });
+
+        // Rest of your useEffect code
+    }, [copied]);
+
+    if (loading) {
+        return <div>Loading...</div>; // Or your custom loading component
+    }
 
     return (
         <div className="NewChatPage">
